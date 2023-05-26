@@ -9,15 +9,22 @@ module "lambda_function" {
 
   source_path = "../src/python-function/index.py" // will need to change index name to lambdas purpose 
 
-  attach_policy_statements = true
 
-  policy_statements = {
-    s3_read = {
-        effect    = "Allow",
-        actions   = ["s3:HeadObject", "s3:GetObject"],
-        resources = ["${module.s3_bucket.s3_bucket_arn}/*"]
-    }
-  }
+  # attach_policy_statements = true
+  attach_policy = true
+  create_role = false
+  lambda_role = "arn:aws:iam::176906365059:role/acacia-Lambda-DB"
+
+
+
+
+  # policy_statements = {
+  #   s3_read = {
+  #       effect    = "Allow",
+  #       actions   = ["s3:HeadObject", "s3:GetObject"],
+  #       resources = ["${module.s3_bucket.s3_bucket_arn}/*"]
+  #   }
+  # }
 
 // create_current_version_allowed_triggers = false
     allowed_triggers = {
