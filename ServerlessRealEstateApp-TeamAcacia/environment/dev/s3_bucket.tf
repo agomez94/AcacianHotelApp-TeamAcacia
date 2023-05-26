@@ -1,19 +1,15 @@
-module "s3_bucket" {
-    source = "terraform-aws-modules/s3-bucket/aws"
-    version = "3.10.1"
+# module "s3_bucket" {
+#     source = "terraform-aws-modules/s3-bucket/aws"
+#     version = "3.10.1"
 
-    bucket = "team-acacia-bucket"
-    acl    = "private"
-
-    control_object_ownership = true
-
-    // S3 bucket level public access block configuration
-    block_public_acls        = true
-    block_public_policy      = true
-    ignore_public_acls       = true
-    restrict_public_buckets  = true
-
-    tags = {
-        "Name" = "${var.default_tag.env}- bucket"
-    }
-}
+#     bucket                      = var.bucket_name
+#     acl                         = var.acl
+#     control_object_ownership    = var.control_object_ownership
+#     block_public_acls           = var.block_public_acls
+#     block_public_policy         = var.block_public_policy
+#     ignore_public_acls          = var.ignore_public_acls
+#     restrict_public_buckets     = var.restrict_public_buckets
+#     tags = {
+#         "Name" = "${var.default_tag.env}-bucket"
+#     }
+# }
