@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AcacianHotels</title>
+    <style>
+        .loader {
+            border: 16px solid #f3f3f3; /* Light grey */
+            border-top: 16px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            display: none; /* Hidden by default */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div id="loader" class="loader"></div>
+    <form id="searchForm">
+        <input type="text" id="region_input" placeholder="Enter city or country" required />
+        <select id="sort_order" required>
+            <option value="">-- Select a sort order --</option>
+            <option value="REVIEW">REVIEW</option>
+            <option value="RECOMMENDED">RECOMMENDED</option>
+            <option value="DISTANCE">DISTANCE</option>
+            <option value="PRICE_LOW_TO_HIGH">PRICE LOW TO HIGH</option>
+            <option value="PROPERTY_CLASS"> PROPERTY CLASS</option>
+            <option value="PRICE_RELEVANT">PRICE RELEVANT</option>
+        </select>
+        <input type="date" id="checkin_date" placeholder="Check-in Date" required />
+        <input type="date" id="checkout_date" placeholder="Check-out Date" required />
+        <input type="number" id="adults_number" placeholder="Number of adults" required min="1" max="7" />
+        <input type="number" id="guest_rating_min" placeholder="Minimum guest rating" min="7" max="9" />
+        <label for="price_min">Minimum price:</label>
+        <input type="range" id="price_min" min="0" max="1000" step="10" value="0">
+        <span id="price_min_value"></span>
+
+        <label for="price_max">Maximum price:</label>
+        <input type="range" id="price_max" min="0" max="1000" step="10" value="1000">
+        <span id="price_max_value"></span>
+
+        <button type="submit" id="searchButton">Search</button>
+    </form>
+    <div id="hotelResults"></div>
+    <script>
+        document.getElementById('price_min').addEventListener('input', function() {
+            document.getElementById('price_min_value').textContent = this.value;
+        });
+
+        document.getElementById('price_max').addEventListener('input', function() {
+            document.getElementById('price_max_value').textContent = this.value;
+        });
+
+        document.getElementById('searchForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            // Show the loader
+            document.getElementById('loader').style.display = 'block';
+
+            const regionInput = document.getElementById('region_input').value;
+            const regionUrl = `https://hotels-com-provider.p.rapidapi.com/v2/regions?locale=en_US&query=${encodeURIComponent(regionInput)}&domain=US`;
+            const regionOptions = {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': '25ca8ed5e4msh28988a8a8c552bdp14fabdjsna8ad7cab82bc',
+                    'X-RapidAPI-Host': 'hotels-com-provider.p.rapidapi.com'
+                }
+            };
+            try {
+                const regionResponse = await fetch(regionUrl, regionOptions);
+                const regionData = await regionResponse.json();
+                let gaiaId = null;
+                if (regionData.data && regionData.data.length > 0) {
+                    const cityRegion = regionData.data.find(result => result.type === 'CITY');
+                    gaiaId = cityRegion ? cityRegion.gaiaId : null;
+                }
+
+                if (gaiaId) {
+                    let url = 'https://hotels-com-provider.p.rapidapi.com/v2/hotels/search';
+                    let params = {
+                        domain: 'US',
+                        sort_order: document.getElementById('sort_order').value,
+                        locale: 'en_US',
+                        checkin_date: document.getElementById('checkin_date').value,
+                        checkout_date: document.getElementById('checkout_date').value,
+                        region_id: gaiaId,
+                        adults_number: document.getElementById('adults_number').value,
+                        guest_rating_min: document.getElementById('guest_rating_min').value,
+                        price_min: document.getElementById('price_min').value,
+                        price_max: document.getElementById('price_max').value
+                    };
+
+                    url += '?' + new URLSearchParams(params);
+
+                    const options = {
+                        method: 'GET',
+                        headers: {
+                            'X-RapidAPI-Key': '25ca8ed5e4msh28988a8a8c552bdp14fabdjsna8ad7cab82bc',
+                            'X-RapidAPI-Host': 'hotels-com-provider.p.rapidapi.com'
+                        }
+                    };
+
+                    fetch(url, options)
+                    .then(response => {
+                        if (!response.ok) {
+                            console.log('Error status:', response.status);
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.properties) {
+                            let html = "";
+                            data.properties.forEach(hotel => {
+                                let imageUrl = "";
+                                let name = "";
+                                let availability = "";
+                                let price = "";
+                                let reviews = "";
+                                let rating = "";
+                                let location = "";
+
+                                if(hotel.propertyImage && hotel.propertyImage.image)
+                                    imageUrl = hotel.propertyImage.image.url;
+                                if(hotel.name)
+                                    name = hotel.name;
+                                if(hotel.availability)
+                                    availability = hotel.availability.available ? 'Available' : 'Not Available';
+                                if(hotel.price && hotel.price.lead)
+                                    price = hotel.price.lead.formatted;
+                                if(hotel.reviews){
+                                    reviews = hotel.reviews.total;
+                                    rating = hotel.reviews.score;
+                                }
+                                if(hotel.neighborhood)
+                                    location = hotel.neighborhood.name;
+
+                                html += `
+                                    <h2>${name}</h2>
+                                    <p>Availability: ${availability}</p>
+                                    <img src="${imageUrl}" alt="Image of ${name}">
+                                    <p>Price: ${price}</p>
+                                    <p>Rating: ${rating} stars (${reviews} reviews)</p>
+                                    <p>Location: ${location}</p>
+                                `;
+                            });
+                            document.getElementById('hotelResults').innerHTML = html;
+                        } else {
+                            console.log('No properties found');
+                        }
+                        document.getElementById('loader').style.display = 'none';
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        document.getElementById('loader').style.display = 'none';
+                    });
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('loader').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
