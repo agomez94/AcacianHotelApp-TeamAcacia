@@ -143,6 +143,6 @@ function generateStars(rating, reviews) {
       slideIndex = 1;
     }
     slides[slideIndex - 1].classList.add("active");
-    setTimeout(showSlides, 7000); // Change slide every 5 seconds
+    setTimeout(showSlides, 7000); // Change slide every 7 seconds
   }
   

@@ -20,6 +20,18 @@ body {
   transition: opacity 3s ease;
 }
 
+#hotel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+body {
+  margin: 0;
+  padding-top: 100px;  /* Adjust this value to create the space you need */
+}
+
 .mySlides.active {
   opacity: 1;
 }
@@ -30,24 +42,28 @@ body {
 }
 #mySidebar {
   position: fixed;
+  top: 60px; /* Adjust as per your header height */
   left: 0;
   padding-left: 0;
   margin-left: 0;
 }
+
 #mainHeader {
   position: fixed;
-  width: calc(100% - 260px); /* adjust the width of the header */
-  right: 0; /* align the header to the right of the screen */
   z-index: 9999;
-  background: #27e988;
+  background: #000; /* Black color */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 15px;
+  width: 100%; /* Extend the header to the full width of the screen */
 }
+
 #mainHeader .w3-bar-item {
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: #27e988;
+  font-size: 24px; /* Increase the font size */
 }
 .loader {
   border: 16px solid #f3f3f3; /* Light grey */
@@ -62,15 +78,18 @@ body {
   transform: translate(-50%, -50%);
   z-index: 9999;
 }
-
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+.w3-content {
+  margin-top: 60px; /* Adjust this value according to your header height */
+}
+
 
 </style>
 </head>
-<body class="w3-content w3-border-left w3-border-right">
+<body class="w3-border-left w3-border-right">
 
 <!-- Main Header -->
 <div id="mainHeader" class="w3-bar w3-top w3-black w3-large">
@@ -78,7 +97,9 @@ body {
   <span class="w3-bar-item">Acacian Hotel Search</span>
 </div>
 
-<div id="hotel-container"></div>
+<div class="hotel-container-parent">
+  <div id="hotel-container"></div>
+</div>
 
 <!-- Sidebar/menu -->
 <nav class="w3-sidebar w3-light-grey w3-collapse w3-top" style="z-index:3;width:260px" id="mySidebar">
@@ -127,8 +148,6 @@ body {
   <img class="mySlides" src="./images/pexels-donald-tong-189296.jpg" style="width:100%">
   <img class="mySlides" src="./images/pexels-pixabay-261102.jpg" style="width:100%">
   <img class="mySlides" src="./images/pexels-thorsten-technoman-338504.jpg" style="width:100%">
-  <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
-  <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
 </div>
 
 <script src="main.js"></script>
