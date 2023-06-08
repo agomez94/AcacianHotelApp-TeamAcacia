@@ -25,40 +25,44 @@ resource "aws_rds_cluster" "db" {
   db_subnet_group_name = aws_db_subnet_group.db.name
 
   # changes
-  engine = "aurora-postgresql"
+  engine = "aurora-mysql"
   engine_mode = "provisioned"
-  engine_version = 13.6
-  serverlessv2_scaling_configuration {
-    max_capacity = 1.0
-    min_capacity = 0.5
-  }
-
-  availability_zones = aws_subnet.private[*].availability_zone
-  database_name = "acaciadb" # no hyphens
-  vpc_security_group_ids = [module.sg_source.sg_id]
+  engine_version = "8.0"
+  database_name = "wordpress"
   master_username = var.db_credentials.username
   master_password = var.db_credentials.password
-  tags = {
-    "Name" = "${var.default_tag.env}-cluster"
+  vpc_security_group_ids = [module.sg_source.sg_id]
+  skip_final_snapshot = true
+
+  serverlessv2_scaling_configuration {
+    max_capacity = 1
+    min_capacity = 0.5
   }
 }
+  # availability_zones = aws_subnet.private[*].availability_zone
+  # db_cluster_identifier = "my-aurora-db-cluster"
+  
+  
 
 # cluster instances
 resource "aws_rds_cluster_instance" "db" {
-  count                = 2
-  identifier           = "${var.default_tag.env}-${count.index + 1}"
+  # identifier           = "${var.default_tag.env}-${count.index + 1}"
   cluster_identifier   = aws_rds_cluster.db.id
   instance_class       = "db.serverless"
   engine               = aws_rds_cluster.db.engine
   engine_version       = aws_rds_cluster.db.engine_version
   db_subnet_group_name = aws_db_subnet_group.db.name
-}
-
-# DB endpoints
-output "db_endpoints" {
-  value = {
-    writer = aws_rds_cluster.db.endpoint
-    reader = aws_rds_cluster.db.reader_endpoint
+  tags = {
+    "Name" = "${var.default_tag.env}-cluster"
   }
 }
+
+
+# DB endpoints
+# output "db_endpoints" {
+#   value = {
+#     reader = aws_rds_cluster.db.reader_endpoint
+#     writer = aws_rds_cluster.db.endpoint
+#    }
+# }
 

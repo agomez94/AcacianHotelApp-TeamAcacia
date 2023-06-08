@@ -1,7 +1,7 @@
 variable "default_tag" {
     type = map(string)
     default = {
-      "env" = "team-acacia"
+      "env" = "team-acacia-test"
     }  
     description = "default tag to include in services built by teamAcacia"
 }
@@ -59,7 +59,7 @@ variable "db_credentials" {
   type      = map(any)
   sensitive = true
   default = {
-    username = "username"
-    password = "password"
+    username = "taadmin1"
+    password = "12qwaszx#$ERDFCV"
   }
 }
