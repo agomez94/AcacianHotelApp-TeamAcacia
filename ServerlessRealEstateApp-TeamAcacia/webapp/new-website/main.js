@@ -84,15 +84,28 @@ function generateStars(rating, reviews) {
                 let reviews = hotel.reviews ? hotel.reviews.total : "";
                 let rating = hotel.reviews ? generateStars(hotel.reviews.score, hotel.reviews.total) : "No ratings";
                 let location = hotel.neighborhood ? hotel.neighborhood.name : "";
-  
+          
                 html += `
-                  <h2>${name}</h2>
-                  <p>Availability: ${availability}</p>
-                  <img src="${imageUrl}" alt="Image of ${name}" onerror="this.style.display='none'">
-                  <p>Price: ${price}</p>
-                  <p>Rating: ${rating} (${reviews} reviews)</p>
-                  <p>Location: ${location}</p>
+                <div class="hotel-box">
+                  <div class="hotel-image">
+                    <img src="${imageUrl}" alt="Image of ${name}" onerror="this.style.display='none'">
+                  </div>
+                  <div class="hotel-details">
+                    <div class="hotel-name-location">
+                      <h2>${name}</h2>
+                      <p class="hotel-location">${location}</p>
+                    </div>
+                    <div class="hotel-availability-rating">
+                      <p class="hotel-availability">${availability}</p>
+                      <p class="hotel-rating">Rating: ${rating} (${reviews} reviews)</p>
+                    </div>
+                  </div>
+                  <div class="hotel-price">
+                    <p>Price: ${price}</p>
+                  </div>
+                </div>
                 `;
+
               });
               document.getElementById('hotel-container').innerHTML = html;
             } else {
@@ -125,6 +138,18 @@ function generateStars(rating, reviews) {
   
     document.getElementById('searchForm').addEventListener('submit', (event) => searchAvailability(event));
   
+    function adjustFontSize() {
+      const containers = document.querySelectorAll('.hotel-box');
+      containers.forEach(container => {
+        const fontSize = parseInt(window.getComputedStyle(container, null).getPropertyValue('height')) / 20; // Adjust the denominator as needed
+        const textElements = container.querySelectorAll('.dynamic-font-size');
+        textElements.forEach(el => {
+          el.style.fontSize = `${fontSize}px`;
+        });
+      });
+    }
+    adjustFontSize();
+    
     // Hide the loader
     toggleLoader(false);
   });
@@ -145,4 +170,3 @@ function generateStars(rating, reviews) {
     slides[slideIndex - 1].classList.add("active");
     setTimeout(showSlides, 7000); // Change slide every 7 seconds
   }
-  
