@@ -10,14 +10,108 @@
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
 body {
+  display: flex; /* Add this */
   margin: 0;
+  padding-top: 0px;
 }
+
 .mySlides {
   position: absolute;
   left: 0;
   top: 0;
   opacity: 0;
   transition: opacity 3s ease;
+}
+
+#searchForm {
+  margin-top: 0vh;
+  
+}
+
+#hotel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.hotel-container-parent {
+  margin-left: 40px; /* Increase this value to move hotel boxes right */
+  margin-right: 20px;
+}
+
+.hotel-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;  /* new property */
+  border: 1px solid #ddd;
+  margin: 2vh;
+  margin-left: 23vh;
+  border-radius: 5px;
+  width: calc(100% - 660px);
+  height: auto;
+  box-sizing: border-box;
+}
+
+.hotel-box .hotel-image {
+  flex: 1;
+  align-self: stretch;  /* new property */
+  display: flex;  /* new property */
+  align-items: center;  /* new property */
+  justify-content: center;  /* new property */
+  overflow: hidden;
+}
+
+.hotel-box .hotel-details {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hotel-box .hotel-details .hotel-name-location {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 1vh;
+  flex-wrap: nowrap; /* Added this to prevent text from wrapping */
+}
+
+.hotel-box .hotel-details .hotel-availability-rating {
+  display: flex;
+  flex-direction: column; /* changed from row to column */
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-left: 1vh;
+}
+
+.hotel-box .hotel-details .hotel-availability-rating .hotel-availability {
+  color: green;
+  margin-bottom: 10px; /* changed margin-right to margin-bottom */
+}
+
+.hotel-box .hotel-price {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* This will align the text to the bottom */
+  align-items: flex-end; /* This will align the text to the right */
+  margin-right: 1vh;
+  font-weight: bold;
+  font-size: 24px; /* Increased the font size */
+}
+
+.hotel-box .hotel-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body {
+  margin: 0;
+  padding-top: 10vh;  /* Adjust this value to create the space you need */
 }
 
 .mySlides.active {
@@ -30,25 +124,44 @@ body {
 }
 #mySidebar {
   position: fixed;
+  top: 60px; /* Adjust as per your header height */
   left: 0;
   padding-left: 0;
   margin-left: 0;
 }
+
+.sidebar-wrapper {
+  flex: 0 0 260px; /* This will give your sidebar a fixed width of 260px */
+}
+
 #mainHeader {
   position: fixed;
-  width: calc(100% - 260px); /* adjust the width of the header */
-  right: 0; /* align the header to the right of the screen */
   z-index: 9999;
-  background: #27e988;
+  background: #000; /* Black color */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 15px;
+  width: 100%; /* Extend the header to the full width of the screen */
 }
+
 #mainHeader .w3-bar-item {
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: #27e988;
+  font-size: 24px; /* Increase the font size */
 }
+
+.flex-container {
+  display: flex;
+  padding: 20px; /* This creates a margin around your entire content */
+}
+
+.main-content {
+  flex-grow: 1; /* This will make your main content take up the remaining width */
+  margin-left: 20px; /* This creates a margin between your sidebar and main content */
+}
+
 .loader {
   border: 16px solid #f3f3f3; /* Light grey */
   border-top: 16px solid #3498db; /* Blue */
@@ -62,15 +175,21 @@ body {
   transform: translate(-50%, -50%);
   z-index: 9999;
 }
-
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+.w3-content {
+  margin-top: 60px; /* Adjust this value according to your header height */
+}
+
+#special-offer-title, #special-offer-subtitle {
+  margin-top: -1.5vh; /* Decrease this value to move higher */
+}
 
 </style>
 </head>
-<body class="w3-content w3-border-left w3-border-right">
+<body class="w3-border-left w3-border-right">
 
 <!-- Main Header -->
 <div id="mainHeader" class="w3-bar w3-top w3-black w3-large">
@@ -78,14 +197,14 @@ body {
   <span class="w3-bar-item">Acacian Hotel Search</span>
 </div>
 
-<div id="hotel-container"></div>
-
+<div class="main-content">
 <!-- Sidebar/menu -->
+<div class="sidebar-wrapper"></div>
 <nav class="w3-sidebar w3-light-grey w3-collapse w3-top" style="z-index:3;width:260px" id="mySidebar">
   <div class="w3-container w3-display-container w3-padding-16">
     <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-transparent w3-display-topright"></i>
-    <h3>Rooms from $99</h3>
-    <h6>per night!</h6>
+    <h3 id="special-offer-title">Rooms from $99</h3>
+    <h6 id="special-offer-subtitle">per night!</h6>
     <hr>
     <form id="searchForm">
       <p><label for="location"><i class="fa fa-map-marker"></i> Location</label></p>
@@ -121,14 +240,17 @@ body {
   </div>
 </nav>
 
+<div class="hotel-container-parent">
+  <div id="hotel-container"></div>
+</div>
+
 <!-- Slideshow -->
-<div class="w3-content w3-display-container" style="max-width:800px;margin:0 auto;">
-  <img class="mySlides" src="./images/hotel.jpg" style="width:100%">
-  <img class="mySlides" src="./images/pexels-donald-tong-189296.jpg" style="width:100%">
-  <img class="mySlides" src="./images/pexels-pixabay-261102.jpg" style="width:100%">
-  <img class="mySlides" src="./images/pexels-thorsten-technoman-338504.jpg" style="width:100%">
-  <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
-  <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+  <div class="w3-content w3-display-container" style="max-width:800px;margin:0 auto;">
+    <img class="mySlides" src="./images/hotel.jpg" style="width:100%">
+    <img class="mySlides" src="./images/pexels-donald-tong-189296.jpg" style="width:100%">
+    <img class="mySlides" src="./images/pexels-pixabay-261102.jpg" style="width:100%">
+    <img class="mySlides" src="./images/pexels-thorsten-technoman-338504.jpg" style="width:100%">
+  </div>
 </div>
 
 <script src="main.js"></script>

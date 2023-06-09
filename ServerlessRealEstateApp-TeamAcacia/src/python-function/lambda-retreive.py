@@ -1,0 +1,1 @@
+#ccan be used for the lambda function to retrieve hotel selections 
