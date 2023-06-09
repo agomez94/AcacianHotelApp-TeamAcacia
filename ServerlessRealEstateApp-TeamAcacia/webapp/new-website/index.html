@@ -139,17 +139,34 @@ body {
   z-index: 9999;
   background: #000; /* Black color */
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* This will spread out the items */
   align-items: center;
   width: 100%; /* Extend the header to the full width of the screen */
+  padding: 0px; /* This adds a little padding to your header */
+}
+
+.loginButtonClass {
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+  display: flex; /* This will align the icon and the text on the same line */
+  align-items: center; /* This will vertically center the text and the icon */
+  margin-left: 65vh; /* Adds the required margin on the right side */
+}
+
+.loginButtonClass i {
+  margin-right: 8px;
 }
 
 #mainHeader .w3-bar-item {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #27e988;
+  color: #18cf73;
   font-size: 24px; /* Increase the font size */
+}
+
+.spacer {
+  visibility: hidden;
 }
 
 .flex-container {
@@ -193,8 +210,19 @@ body {
 
 <!-- Main Header -->
 <div id="mainHeader" class="w3-bar w3-top w3-black w3-large">
-  <button class="w3-button w3-padding-24 w3-hide-large" onclick="w3_open()"><i class="fa fa-bars"></i></button>
+  <div class="spacer loginButtonClass">
+    <i class="fa fa-user"></i>
+    <span>Login / Sign Up</span>
+  </div>
   <span class="w3-bar-item">Acacian Hotel Search</span>
+
+<!-- Moved Login Button -->
+<a href="login.html"> <!-- Add the anchor tag here -->
+  <div id="loginButton" class="loginButtonClass">
+    <i class="fa fa-user"></i>
+    <span>Login / Sign Up</span>
+  </div>
+</a>
 </div>
 
 <div class="main-content">
