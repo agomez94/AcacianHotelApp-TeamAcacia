@@ -1,4 +1,4 @@
-#ccan be used for the lambda function to retrieve hotel selections
+# Lambda function for retrieval of username and passoword validation to mysql db
 import json
 import boto3
 import mysql.connector
