@@ -1,4 +1,4 @@
-#can be used for the lambda function code to save user hotel selections
+# Lambda function to save username and password data to mysql db
 import json
 import boto3
 import mysql.connector
