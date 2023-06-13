@@ -6,14 +6,14 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: acacian-hotelapp
+  name: team-acacia
   namespace: team-acacia
   labels:
-    app: acacian-hotelapp
+    app: team-acacia
 spec:
   selector:
     matchLabels:
-      app: acacian-hotelapp
+      app: team-acacia
   replicas: 1
   strategy: 
     rollingUpdate: 
@@ -23,11 +23,11 @@ spec:
   template: 
     metadata: 
       labels: 
-        app:  acacian-hotelapp
+        app:  team-acacia
     spec:
       containers:
-      - name: acacian-hotelapp
-        image: k8s.gcr.io/echoserver:1.4
+      - name: team-acacia
+        image: httpd:latest
         resources:
           requests:
             cpu: 100m
@@ -36,8 +36,8 @@ spec:
             cpu: 100m
             memory: 100Mi
         ports:
-        - containerPort: 8000
-          name: acacian-hotelapp
+        - containerPort: 80
+          name: team-acacia
         imagePullPolicy: Always
       restartPolicy: Always
 
@@ -45,18 +45,18 @@ spec:
 apiVersion: v1 
 kind: Service 
 metadata: 
-  name: acacian-hotelapp 
+  name: team-acacia 
   namespace: team-acacia 
 spec: 
   selector: 
-    app: acacian-hotelapp 
+    app: team-acacia 
   type: LoadBalancer 
   sessionAffinity: None 
   sessionAffinityConfig: 
     clientIP: 
       timeoutSeconds: 10800 
   ports: 
-  - name: acacian-hotelapp 
+  - name: team-acacia 
     protocol: TCP 
     port: 80 
-    targetPort: 8000 
+    targetPort: 80 
