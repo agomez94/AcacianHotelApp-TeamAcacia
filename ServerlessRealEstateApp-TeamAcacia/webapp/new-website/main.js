@@ -17,7 +17,7 @@ async function fetchHotelDetails(hotelId) {
   const options = {
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': '25ca8ed5e4msh28988a8a8c552bdp14fabdjsna8ad7cab82bc',
+      'X-RapidAPI-Key': '38a52d2bb5mshcb854e4ae55afa0p105556jsnd2fbc6d4e74e      ',
       'X-RapidAPI-Host': 'hotels-com-provider.p.rapidapi.com'
     }
   };
@@ -82,17 +82,6 @@ async function fetchHotelDetails(hotelId) {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
 function generateStars(rating, reviews) {
   let stars = '';
   for (let i = 0; i < Math.floor(rating); i++) {
@@ -121,7 +110,7 @@ async function searchAvailability(event) {
     const regionOptions = {
       method: 'GET',
       headers: {
-        'X-RapidAPI-Key': '25ca8ed5e4msh28988a8a8c552bdp14fabdjsna8ad7cab82bc',
+        'X-RapidAPI-Key': '38a52d2bb5mshcb854e4ae55afa0p105556jsnd2fbc6d4e74e        ',
         'X-RapidAPI-Host': 'hotels-com-provider.p.rapidapi.com'
       }
     };
@@ -155,7 +144,7 @@ async function searchAvailability(event) {
         const options = {
           method: 'GET',
           headers: {
-            'X-RapidAPI-Key': '25ca8ed5e4msh28988a8a8c552bdp14fabdjsna8ad7cab82bc',
+            'X-RapidAPI-Key': '38a52d2bb5mshcb854e4ae55afa0p105556jsnd2fbc6d4e74e            ',
             'X-RapidAPI-Host': 'hotels-com-provider.p.rapidapi.com'
           }
         };
