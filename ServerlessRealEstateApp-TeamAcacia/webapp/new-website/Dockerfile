@@ -12,8 +12,8 @@ COPY pexels-pixabay-53464.jpg /usr/local/apache2/htdocs/images
 COPY pexels-pixabay-261102.jpg /usr/local/apache2/htdocs/images
 COPY pexels-thorsten-technoman-338504.jpg /usr/local/apache2/htdocs/images
 
-COPY main.js ServerlessRealEstateApp-TeamAcacia\webapp\new-website\main.js
+COPY main.js /usr/local/apache2/htdocs/
 
-# /usr/local/apache2/htdocs/
+
 # Expose port 80 to allow incoming HTTP traffic
 EXPOSE 80
