@@ -23,8 +23,8 @@ COPY pexels-pixabay-53464.jpg ServerlessRealEstateApp-TeamAcacia/webapp/new-webs
 COPY pexels-pixabay-261102.jpg ServerlessRealEstateApp-TeamAcacia/webapp/new-website/pexels-pixabay-261102.jpg
 COPY pexels-thorsten-technoman-338504.jpg ServerlessRealEstateApp-TeamAcacia/webapp/new-website/pexels-thorsten-technoman-338504.jpg
 
-COPY main.js ServerlessRealEstateApp-TeamAcacia/webapp/new-website/main.js
-
+COPY main.js Project_3/ServerlessRealEstateApp-TeamAcacia/webapp/new-website/main.js
+            
 
 # Expose port 80 to allow incoming HTTP traffic
 EXPOSE 80
