@@ -56,22 +56,67 @@
   .container .psw a {
     color: #18cf73;
   }
+
+  .error-message {
+    color: red;
+    margin-bottom: 10px;
+  }
 </style>
 </head>
 <body>
 <div class="form-container">
   <h2>Signup</h2>
-  <form action="register.php" method="post">
+  <form onsubmit="return submitForm(event)">
     <div class="container">
       <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
+      <input type="text" placeholder="Enter Username" name="uname" id="uname" required>
 
       <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+      <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+
+      <label for="confirm-psw"><b>Confirm Password</b></label>
+      <input type="password" placeholder="Confirm Password" name="confirm-psw" id="confirm-psw" required>
+      
+      <div class="error-message" id="password-error"></div>
 
       <button type="submit">Signup</button>
     </div>
   </form>
 </div>
+
+<script>
+  function submitForm(event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+  
+    var username = document.getElementById("uname").value;
+    var password = document.getElementById("psw").value;
+    var confirmPsw = document.getElementById("confirm-psw").value;
+  
+    // Create the request body as JSON
+    var requestBody = JSON.stringify({
+      "username": username,
+      "password": password,
+      "confirmPsw": confirmPsw
+    });
+  
+    // Send the request to the API Gateway endpoint
+    fetch("https://jar7145dnc.execute-api.us-east-1.amazonaws.com/dev/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: requestBody
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data); // Process the response as needed
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
+  }
+  </script>
+  
+
 </body>
 </html>
