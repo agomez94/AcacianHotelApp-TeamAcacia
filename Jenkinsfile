@@ -17,7 +17,7 @@ pipeline {
         sh 'pwd '
         sh 'ls'
         script {
-          dockerImage = docker.build(registry, "-f Project3/ServerlessRealEstateApp-TeamAcacia/webapp/new-website/Dockerfile .")
+          dockerImage = docker.build(registry, "-f /opt/jenkins/workspace/AcacianHotelApp-TeamAcacia_main/ServerlessRealEstateApp-TeamAcacia/webapp/new-website/Dockerfile .")
         }
 
       }
