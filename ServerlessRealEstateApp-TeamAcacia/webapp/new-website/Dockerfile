@@ -13,17 +13,17 @@ FROM httpd:latest
 # COPY pexels-thorsten-technoman-338504.jpg /usr/local/apache2/htdocs/images
 
 # COPY main.js /usr/local/apache2/htdocs/
-COPY index.html Project3/ServerlessRealEstateApp-TeamAcacia/webapp/new-website/index.html
-COPY login.html Project3/ServerlessRealEstateApp-TeamAcacia/webapp/new-website/login.html
-COPY signup.html Project3/ServerlessRealEstateApp-TeamAcacia/webapp/new-website/signup.html
+COPY index.html ServerlessRealEstateApp-TeamAcacia/webapp/new-website/index.html
+COPY login.html ServerlessRealEstateApp-TeamAcacia/webapp/new-website/login.html
+COPY signup.html ServerlessRealEstateApp-TeamAcacia/webapp/new-website/signup.html
 
-COPY hotel.jpg Project3/ServerlessRealEstateApp-TeamAcacia/webapp/new-website/hotel.jpg
-COPY pexels-donald-tong-189296.jpg Project3/ServerlessRealEstateApp-TeamAcacia/webapp/new-website/pexels-donald-tong-189296.jpg
-COPY pexels-pixabay-53464.jpg Project3/ServerlessRealEstateApp-TeamAcacia/webapp/new-website/pexels-pixabay-53464.jpg
-COPY pexels-pixabay-261102.jpg Project3/ServerlessRealEstateApp-TeamAcacia/webapp/new-website/pexels-pixabay-261102.jpg
-COPY pexels-thorsten-technoman-338504.jpg Project3/ServerlessRealEstateApp-TeamAcacia/webapp/new-website/pexels-thorsten-technoman-338504.jpg
+COPY hotel.jpg ServerlessRealEstateApp-TeamAcacia/webapp/new-website/hotel.jpg
+COPY pexels-donald-tong-189296.jpg ServerlessRealEstateApp-TeamAcacia/webapp/new-website/pexels-donald-tong-189296.jpg
+COPY pexels-pixabay-53464.jpg ServerlessRealEstateApp-TeamAcacia/webapp/new-website/pexels-pixabay-53464.jpg
+COPY pexels-pixabay-261102.jpg ServerlessRealEstateApp-TeamAcacia/webapp/new-website/pexels-pixabay-261102.jpg
+COPY pexels-thorsten-technoman-338504.jpg ServerlessRealEstateApp-TeamAcacia/webapp/new-website/pexels-thorsten-technoman-338504.jpg
 
-COPY main.js Project3/ServerlessRealEstateApp-TeamAcacia/webapp/new-website/main.js
+COPY main.js ServerlessRealEstateApp-TeamAcacia/webapp/new-website/main.js
             
 
 # Expose port 80 to allow incoming HTTP traffic
