@@ -22,7 +22,7 @@ pipeline {
     stage ('Build stage') {
       steps {
         script {
-          dockerImage = docker.build(registry, "-f ServerlessRealEstateApp-TeamAcacia/webapp/new-website/Dockerfile")
+          dockerImage = docker.build(registry, "-f ServerlessRealEstateApp-TeamAcacia/webapp/new-website/Dockerfile .")
         }
       }
     }
