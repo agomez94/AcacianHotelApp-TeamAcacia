@@ -1,11 +1,4 @@
 pipeline {
-  environment{
-  registry = "eglad001/team-acacia"
-  registryCredentials = "teamacacia"
-  cluster_name = "acacian-hotelapp"
-  namespace = "team-acacia"
-}
-
   agent {
     node {
       label 'teamacacia'
@@ -19,40 +12,53 @@ pipeline {
       }
     }
 
-    stage ('Build stage') {
+    stage('Build stage') {
       steps {
+        sh 'pwd '
+        sh 'ls'
         script {
           dockerImage = docker.build(registry, "-f Project3/ServerlessRealEstateApp-TeamAcacia/webapp/new-website/Dockerfile .")
         }
+
       }
     }
 
-    stage('Deployment stage'){
+    stage('Deployment stage') {
       steps {
         script {
           docker.withRegistry('', registryCredentials) {
             dockerImage.push()
           }
         }
+
       }
     }
-// This allows us to deploy kubernetes as a stage in Jenkins
-  stage('kubernetes') {
-    steps {
-      withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS', secretKeyVariable: "AWS_SECRET_ACCESS_KEY")]) {
-        sh "aws eks --region us-east-1 update-kubeconfig --name ${cluster_name}"
-        script {
-          try {
-            sh "kubectl create namespace ${namespace}"
+
+    stage('kubernetes') {
+      steps {
+        withCredentials(bindings: [aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS', secretKeyVariable: "AWS_SECRET_ACCESS_KEY")]) {
+          sh "aws eks --region us-east-1 update-kubeconfig --name ${cluster_name}"
+          script {
+            try {
+              sh "kubectl create namespace ${namespace}"
+            }
+            catch (Exception e) {
+              echo "Error / namespace already created"
+            }
           }
-          catch (Exception e) {
-            echo "Error / namespace already created"
-          }
+
+          sh "kubectl apply -f ./deployment.yaml -n ${namespace}"
+          sh "kubectl -n ${namespace} rollout restart deployment team-acacia"
         }
-        sh "kubectl apply -f ./deployment.yaml -n ${namespace}"
-        sh "kubectl -n ${namespace} rollout restart deployment team-acacia"
+
       }
     }
+
   }
+  environment {
+    registry = 'eglad001/team-acacia'
+    registryCredentials = 'teamacacia'
+    cluster_name = 'acacian-hotelapp'
+    namespace = 'team-acacia'
   }
 }
