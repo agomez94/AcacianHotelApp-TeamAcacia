@@ -61,13 +61,13 @@
 <body>
 <div class="form-container">
   <h2>Login</h2>
-  <form action="authenticate.php" method="post">
+  <form onsubmit="return submitLoginForm(event)">
     <div class="container">
       <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
+      <input type="text" placeholder="Enter Username" name="uname" id="uname" required>
 
       <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+      <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
 
       <button type="submit">Login</button>
     </div>
@@ -77,6 +77,49 @@
     </div>
   </form>
 </div>
+
+<script>
+  function submitLoginForm(event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+  
+    var username = document.getElementById("uname").value;
+    var password = document.getElementById("psw").value;
+  
+    // Create the request body as JSON
+    var requestBody = JSON.stringify({
+      "username": username,
+      "password": password
+    });
+  
+    // Send the request to the API Gateway endpoint
+    fetch("https://8idf4tddma.execute-api.us-east-1.amazonaws.com/dev/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: requestBody
+    })
+      .then(response => {
+        return response.json().then(data => ({status: response.status, body: data}));
+      })
+      .then(({status, body}) => {
+        if (status === 200) {
+          console.log('User authorized. Login successful.');
+          localStorage.setItem('jwtToken', body.jwtToken);
+          // Store username in local storage
+          localStorage.setItem('username', username);
+          // Redirect to the desired page or perform other actions on successful login
+          window.location.href = 'index.html';
+        } else {
+          console.log('Invalid credentials. Login failed.');  
+          // Notify the user about failed login attempt
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
+  }
+  </script>
+  
 </body>
 </html>
-
