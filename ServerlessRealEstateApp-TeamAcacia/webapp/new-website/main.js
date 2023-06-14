@@ -3,131 +3,20 @@ window.onload = function() {
   var loginLink = document.getElementById('loginLink');
 
   if (username) {
-    loginLink.href = 'logout.html';
-    loginLink.innerHTML = '<i class="fa fa-user"></i><span>Logout (' + username + ')</span>';
+      loginLink.href = 'logout.html';
+      loginLink.innerHTML = '<i class="fa fa-user"></i><span>Logout (' + username + ')</span>';
   }
 };
 
-async function fetchHotelDetails(hotelId) {
-  console.log('Fetching details for hotel with id', hotelId);
-
-  let url = `https://hotels-com-provider.p.rapidapi.com/v2/hotels/details?domain=US&locale=en_US&hotel_id=${hotelId}`;
-
-  const options = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Key': '38a52d2bb5mshcb854e4ae55afa0p105556jsnd2fbc6d4e74e',
-      'X-RapidAPI-Host': 'hotels-com-provider.p.rapidapi.com'
-    }
-  };
-
-  try {
-    const response = await fetch(url, options);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    if (!data || !data.propertyContentSectionGroups || !data.propertyContentSectionGroups.aboutThisProperty) {
-      throw new Error("Unexpected data format!");
-    }
-    
-    const hotelDetails = data.propertyContentSectionGroups;
-    const summary = data.summary;
-    const locationData = data.location;
-    const imagesData = data.propertyGallery;
-    const reviewInfo = data.reviewInfo;
-    const name = summary && summary.name ? summary.name : '';
-
-    const description = summary && summary.overview ? summary.overview.accessibilityLabel : '';
-    const rating = summary && summary.propertyRating ? summary.propertyRating.rating : '';
-    const location = locationData && locationData.address ? locationData.address.addressLine : '';
-    const images = imagesData && imagesData.images ? imagesData.images.map(image => image.image.url) : [];
-    const totalReviews = reviewInfo && reviewInfo.summary ? reviewInfo.summary.propertyReviewCountDetails.shortDescription : 'No reviews';
-    
-    const amenities = summary && summary.amenities ? summary.amenities.amenities.map(item => item.name) : [];
-
-    console.log('Description:', description);
-    console.log('Rating:', rating);
-    console.log('Location:', location);
-    console.log('Images:', images);
-    console.log('Amenities:', amenities);
-    console.log('Total Reviews:', totalReviews);
-
-    const hotelContainer = document.getElementById('hotel-container');
-
-    // Clear existing content
-    hotelContainer.innerHTML = '';
-
-    const newContentContainer = document.createElement('div');
-    newContentContainer.setAttribute('id', 'hotel-data');
-    newContentContainer.classList.add('new-content-container');
-
-    
-    const nameElement = document.createElement('h1');
-    nameElement.textContent = name;
-    newContentContainer.appendChild(nameElement);
-
-    const descriptionElement = document.createElement('p');
-    descriptionElement.textContent = description;
-    newContentContainer.appendChild(descriptionElement);
-
-    const ratingElement = document.createElement('p');
-    ratingElement.textContent = `Rating: ${rating}`;
-    newContentContainer.appendChild(ratingElement);
-
-    const locationElement = document.createElement('p');
-    locationElement.textContent = `Location: ${location}`;
-    newContentContainer.appendChild(locationElement);
-
-    const imagesContainer = document.createElement('div');
-    imagesContainer.setAttribute('class', 'image-container');
-
-    const imageElement = document.createElement('img');
-    imageElement.src = images[0];
-    imageElement.setAttribute('class', 'carousel-image');
-    imagesContainer.appendChild(imageElement);
-
-    const rightArrow = document.createElement('button');
-    rightArrow.innerHTML = '>';
-    rightArrow.setAttribute('class', 'carousel-arrow right');
-    imagesContainer.appendChild(rightArrow);
-
-    const leftArrow = document.createElement('button');
-    leftArrow.innerHTML = '<';
-    leftArrow.setAttribute('class', 'carousel-arrow left');
-    imagesContainer.appendChild(leftArrow);
-
-    let currentIndex = 0;
-    rightArrow.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % images.length;
-      imageElement.src = images[currentIndex];
-    });
-
-    leftArrow.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + images.length) % images.length;
-      imageElement.src = images[currentIndex];
-    });
-
-    newContentContainer.appendChild(imagesContainer);
-
-    const amenitiesElement = document.createElement('ul');
-    amenities.forEach(amenity => {
-      const amenityItem = document.createElement('li');
-      amenityItem.textContent = amenity;
-      amenitiesElement.appendChild(amenityItem);
-    });
-    newContentContainer.appendChild(amenitiesElement);
-    
-    hotelContainer.appendChild(newContentContainer);
-
-  } catch (error) {
-    console.error('Error:', error);
-    return null;
+// This function will be called when the search form is submitted.
+document.getElementById('searchForm').addEventListener('submit', function(event) {
+  // Check whether user is logged in.
+  if (!sessionStorage.getItem('isLoggedIn')) {
+    // If not logged in, prevent form from being submitted and show an alert.
+    event.preventDefault();
+    alert('You must be logged in to search for hotels.');
   }
-}
-
-// Attach the function to window so it can be accessed globally
-window.fetchHotelDetails = fetchHotelDetails;
+});
 
 function generateStars(rating, reviews) {
   let stars = '';
@@ -217,6 +106,7 @@ async function searchAvailability(event) {
               let location = hotel.neighborhood ? hotel.neighborhood.name : "";
     
               html += `
+              <a href="hoteldetails.html?hotelId=${hotel.id}">
               <div class="hotel-box" onclick="fetchHotelDetails(${hotel.id})">
                 <div class="hotel-image">
                   <img src="${imageUrl}" alt="Image of ${name}" onerror="this.style.display='none'">
@@ -288,6 +178,17 @@ async function searchAvailability(event) {
   let slideIndex = 0;
   showSlides();
 
+  function login(username, password) {
+    // Here you'd actually use your backend to validate username and password.
+    // This is just a dummy check.
+    if (username && password) {
+      sessionStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('username', username);
+    } else {
+      alert('Invalid username or password');
+    }
+  }
+  
   function showSlides() {
     const slides = document.getElementsByClassName("mySlides");
     for (let i = 0; i < slides.length; i++) {

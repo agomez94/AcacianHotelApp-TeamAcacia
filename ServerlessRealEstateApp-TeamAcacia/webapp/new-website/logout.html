@@ -67,9 +67,15 @@
 
   <script>
     function logout() {
+      // Remove all the relevant session variables
+      localStorage.removeItem('jwtToken');
       localStorage.removeItem('username');
+      sessionStorage.removeItem('isLoggedIn');
+  
+      // Redirect to the homepage
       window.location.href = 'index.html';
     }
   </script>
+  
 </body>
 </html>

@@ -108,6 +108,7 @@
           localStorage.setItem('jwtToken', body.jwtToken);
           // Store username in local storage
           localStorage.setItem('username', username);
+          sessionStorage.setItem('isLoggedIn', 'true');
           // Redirect to the desired page or perform other actions on successful login
           window.location.href = 'index.html';
         } else {
