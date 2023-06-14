@@ -1,452 +1,384 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
-        body {
-          display: flex; 
-          margin: 0;
-          padding-top: 0px;
-        }
-        
-        #hotel-data {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-        }
-        
-        .new-content-container {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          text-align: center;
-        }
-        
-        .new-content-container h1 {
-          align-items: center;
-          text-align: center;
-        }
-        
-        .new-content-container p {
-          align-items: center;
-          text-align: center;
-        }
-        
-        .new-content-container img {
-          align-items: center;
-          text-align: center;
-        }
-        
-        .new-content-container ul {
-          align-items: center;
-          text-align: center;
-        }
-        
-        .new-content-container li {
-          align-items: center;
-          text-align: center;
-        }
-        
-        .image-container {
-          position: relative;
-          width: 300px;
-          height: 200px;
-          margin: 0 auto;
-        }
-        
-        .carousel-image {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-        
-        .carousel-arrow {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          background: rgba(0, 0, 0, 0.5);
-          color: white;
-          border: none;
-          cursor: pointer;
-          font-size: 2em;
-          padding: 5px 10px;
-        }
-        
-        .carousel-arrow.left {
-          left: 5px;
-        }
-        
-        .carousel-arrow.right {
-          right: 5px;
-        }
-        
-        .hotel-details-container {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          text-align: center;
-          height: 100vh;  
-        }
-        
-        .hotel-details-container .hotel-info {
-          text-align: center;
-        }
-        
-        
-        .mySlides {
-          position: absolute;
-          left: 0;
-          top: 0;
-          opacity: 0;
-          transition: opacity 3s ease;
-        }
-        
-        #searchForm {
-          margin-top: 0vh;
-          
-        }
-        
-        #hotel-container {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          justify-content: flex-start;
-          width: 100%;
-        }
-        
-        .hotel-container-parent {
-          margin-left: 40px; 
-          margin-right: 20px;
-        }
-        
-        .hotel-box {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: stretch;  
-          border: 1px solid #ddd;
-          margin: 2vh;
-          margin-left: 23vh;
-          border-radius: 5px;
-          width: calc(100% - 660px);
-          height: auto;
-          box-sizing: border-box;
-        }
-        
-        .hotel-box .hotel-image {
-          flex: 1;
-          align-self: stretch;  
-          display: flex;  
-          align-items: center;  
-          justify-content: center;  
-          overflow: hidden;
-        }
-        
-        .hotel-box .hotel-details {
-          flex: 3;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-        }
-        
-        .hotel-box .hotel-details .hotel-name-location {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          margin-left: 1vh;
-          flex-wrap: nowrap; 
-        }
-        
-        .hotel-box .hotel-details .hotel-availability-rating {
-          display: flex;
-          flex-direction: column; 
-          justify-content: flex-start;
-          align-items: flex-start;
-          margin-left: 1vh;
-        }
-        
-        .hotel-box .hotel-details .hotel-availability-rating .hotel-availability {
-          color: green;
-          margin-bottom: 10px; 
-        }
-        
-        .hotel-box .hotel-price {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-end; 
-          align-items: flex-end; 
-          margin-right: 1vh;
-          font-weight: bold;
-          font-size: 24px; 
-        }
-        
-        .hotel-box .hotel-image img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-        
-        body {
-          margin: 0;
-          padding-top: 10vh;  
-        }
-        
-        .mySlides.active {
-          opacity: 1;
-        }
-        
-        .mySlides img {
-          display: block;
-          margin: auto;
-        }
-        #mySidebar {
-          position: fixed;
-          top: -5vh; 
-          left: 0;
-          padding-left: 0;
-          margin-left: 0;
-          margin-top: 0vh;
-          padding-top: 0vh;
-        }
-        
-        .sidebar-wrapper {
-          flex: 0 0 260px; 
-        }
-        
-        #mainHeader {
-          position: fixed;
-          z-index: 9999;
-          background: #000; 
-          display: flex;
-          justify-content: center; 
-          align-items: center;
-          width: 100%; 
-          padding: 0px; 
-        }
-        
-        .loginButtonClass {
-          color: rgb(255, 255, 255);
-          font-size: 16px;
-          display: flex; 
-          align-items: center; 
-          position: absolute;
-          top: 0;
-          right: 0;
-          margin: 10px;
-        }
-        
-        .loginButtonClass i {
-          margin-right: 8px;
-        }
-        
-        #mainHeader .w3-bar-item {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          color: #18cf73;
-          font-size: 24px; 
-        }
-        
-        .spacer {
-          visibility: hidden;
-        }
-        
-        .flex-container {
-          display: flex;
-          padding: 20px; 
-        }
-        
-        .main-content {
-          flex-grow: 1; 
-          margin-left: 20px; 
-        }
-        
-        .loader {
-          border: 16px solid #f3f3f3; 
-          border-top: 16px solid #3498db; 
-          border-radius: 50%;
-          width: 120px;
-          height: 120px;
-          animation: spin 2s linear infinite;
-          position: fixed;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          z-index: 9999;
-        }
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-        .w3-content {
-          margin-top: 60px; 
-        }
-        
-        #special-offer-title, #special-offer-subtitle {
-          margin-top: -1.5vh; 
-        }
-        </style>
+  <style>
+    body, h1, h2, h3, h4, h5, h6 {
+      font-family: "Raleway", Arial, Helvetica, sans-serif;
+    }
+  
+    .new-content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    padding-top: 5vh;
+    text-align: center;
+}
+  
+    .image-container {
+      order: 1;
+      position: relative;
+      width: 600px;
+      height: 400px;
+      margin: 0; /* Remove auto margin */
+    }
+  
+    .carousel-image,
+    .hotel-box .hotel-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 2em;
+      padding: 5px 10px;
+    }
+  
+    .carousel-arrow.left {
+      left: 5px;
+    }
+  
+    .carousel-arrow.right {
+      right: 5px;
+    }
+  
+    .hotel-box {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: stretch;
+      border: 1px solid #ddd;
+      margin: 2vh;
+      margin-left: 0;
+      border-radius: 5px;
+      width: calc(100% - 660px);
+      height: auto;
+      box-sizing: border-box;
+    }
+  
+    #mainHeader .w3-bar-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #18cf73;
+      font-size: 24px;
+    }
+  
+    #mainHeader {
+      position: fixed;
+      top: 0;
+      z-index: 9999;
+      background: #000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 0px;
+    }
+
+.left-header, .right-header {
+  width: 15%;
+}
+
+.center-header {
+  width: 70%;
+  text-align: center;
+}
+
+
+    .titleContainer {
+      display: flex;
+      justify-content: center;
+      flex-grow: 1;
+    }
+  
+    #bodyContent,
+    #hotel-data,
+    .new-content-container {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        padding-top: 0px;
+    }
+
+    .new-content-container {
+        display: flex;
+        flex-direction: row; 
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1rem;
+        width: 100%; 
+    }
+
+    .image-container {
+      order: 1;
+      margin: 0;
+      padding: 2vh;
+      flex: 0 0 50%; /* Use 50% of the width */
+    }
+  
+    #hotel-data h1,
+    #hotel-data p {
+      
+      width: 100%;
+      order: 0;
+    }
+  
+    .amenities-list,
+.policies-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border: 1px solid black;
+  padding: 2rem;
+  flex: 0 0 100%; 
+  height: auto;
+  margin: 0 1rem;
+}
+
+  
+    .amenities-list {
+      order: 2;
+    }
+  
+    .policies-container {
+      order: 3;
+    }
+
+    /* Additional CSS for the amenities and policies grid */
+    @media (max-width: 767px) {
+      .new-content-container {
+        flex-direction: column;
+        align-items: center;
+      }
+  
+      .image-container,
+      .amenities-list,
+      .policies-container {
+        flex: 0 0 100%; /* They will take full width in small devices */
+      }
+    }
+
+    .left-align {
+    text-align: left;
+    }
+
+  </style>
+  
 </head>
 <body class="w3-border-left w3-border-right">
-
-    <!-- Main Header -->
-    <div id="mainHeader" class="w3-bar w3-top w3-black w3-large">
+  <div id="mainHeader" class="w3-bar w3-top w3-black w3-large">
+    <div class="left-header"></div> <!-- Empty div for left space -->
+    <div class="center-header">
       <span class="w3-bar-item w3-center">Acacian Hotel Search</span>
-      <!-- Login Button -->
+    </div>
+    <div class="right-header">
       <a id="loginLink" href="login.html" class="w3-bar-item w3-right loginButtonClass">
         <i class="fa fa-user"></i>
         <span>Login / Sign Up</span>
       </a>
     </div>
-    <div id="hotel-container">
-        <!-- The hotel details will be added here by the JavaScript code -->
-    </div>
-<script>
+  </div>
+    <div id="bodyContent"></div>
+    <div id="hotel-container"></div>
+    <script>
     window.onload = function() {
-    var username = localStorage.getItem('username');
-    var loginLink = document.getElementById('loginLink');
+        var username = localStorage.getItem('username');
+        var loginLink = document.getElementById('loginLink');
 
-    if (username) {
-        loginLink.href = 'logout.html';
-        loginLink.innerHTML = '<i class="fa fa-user"></i><span>Logout (' + username + ')</span>';
-        const urlParams = new URLSearchParams(window.location.search);
-        const hotelId = urlParams.get('hotelId');
-        
-        // Fetch the hotel details
-        if (hotelId) {
-            fetchHotelDetails(hotelId);
-    }}
+        if (username) {
+            loginLink.href = 'logout.html';
+            loginLink.innerHTML = '<i class="fa fa-user"></i><span>Logout (' + username + ')</span>';
+            const urlParams = new URLSearchParams(window.location.search);
+            const hotelId = urlParams.get('hotelId');
+
+            // Fetch the hotel details
+            if (hotelId) {
+                fetchHotelDetails(hotelId);
+            }
+        }
     };
 
-async function fetchHotelDetails(hotelId) {
-  console.log('Fetching details for hotel with id', hotelId);
+    async function fetchHotelDetails(hotelId) {
+        console.log('Fetching details for hotel with id', hotelId);
 
-  let url = `https://hotels-com-provider.p.rapidapi.com/v2/hotels/details?domain=US&locale=en_US&hotel_id=${hotelId}`;
+        let url = `https://hotels-com-provider.p.rapidapi.com/v2/hotels/details?domain=US&locale=en_US&hotel_id=${hotelId}`;
 
-  const options = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Key': '38a52d2bb5mshcb854e4ae55afa0p105556jsnd2fbc6d4e74e',
-      'X-RapidAPI-Host': 'hotels-com-provider.p.rapidapi.com'
-    }
-  };
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': '38a52d2bb5mshcb854e4ae55afa0p105556jsnd2fbc6d4e74e',
+                'X-RapidAPI-Host': 'hotels-com-provider.p.rapidapi.com'
+            }
+        };
 
-  try {
-    const response = await fetch(url, options);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    if (!data || !data.propertyContentSectionGroups || !data.propertyContentSectionGroups.aboutThisProperty) {
-      throw new Error("Unexpected data format!");
-    }
-    
-    const hotelDetails = data.propertyContentSectionGroups;
-    const summary = data.summary;
-    const locationData = data.location;
-    const imagesData = data.propertyGallery;
-    const reviewInfo = data.reviewInfo;
-    const name = summary && summary.name ? summary.name : '';
+        try {
+            const response = await fetch(url, options);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            console.log(data);
 
-    const description = summary && summary.overview ? summary.overview.accessibilityLabel : '';
-    const rating = summary && summary.propertyRating ? summary.propertyRating.rating : '';
-    const location = locationData && locationData.address ? locationData.address.addressLine : '';
-    const images = imagesData && imagesData.images ? imagesData.images.map(image => image.image.url) : [];
-    const totalReviews = reviewInfo && reviewInfo.summary ? reviewInfo.summary.propertyReviewCountDetails.shortDescription : 'No reviews';
-    
-    const amenities = summary && summary.amenities ? summary.amenities.amenities.map(item => item.name) : [];
+            if (!data || !data.propertyContentSectionGroups || !data.propertyContentSectionGroups.aboutThisProperty) {
+                throw new Error("Unexpected data format!");
+            }
 
-    console.log('Description:', description);
-    console.log('Rating:', rating);
-    console.log('Location:', location);
-    console.log('Images:', images);
-    console.log('Amenities:', amenities);
-    console.log('Total Reviews:', totalReviews);
+            const summary = data.summary || {};
+            const locationData = summary.location || {};
+            const imagesData = data.propertyGallery || {};
+            const reviewInfo = data.reviewInfo || {};
+            const name = summary.name || '';
+            const rating = (reviewInfo.summary && reviewInfo.summary.overallScoreWithDescriptionA11y) ? reviewInfo.summary.overallScoreWithDescriptionA11y.value : '';
+            const location = locationData.address ? `${locationData.address.addressLine}` : '';
+            const images = imagesData.images ? imagesData.images.map(image => image.image.url) : [];
+            // const amenitiesHeader = (summary.amenities && summary.amenities.topAmenities && summary.amenities.topAmenities.header) ? summary.amenities.topAmenities.header.text : '';
+            const amenities = (summary.amenities && summary.amenities.topAmenities && summary.amenities.topAmenities.items) ? summary.amenities.topAmenities.items.map(item => item.text) : [];
 
-    const hotelContainer = document.getElementById('hotel-container');
+            let policies = [];
+            if (data.propertyContentSectionGroups && data.propertyContentSectionGroups.policies && data.propertyContentSectionGroups.policies.sections) {
+                let policySections = data.propertyContentSectionGroups.policies.sections;
+                for (let i = 0; i <= 3; i++) { // Only consider sections 0-3
+                    let section = policySections[i];
+                    if (section && section.bodySubSections) {
+                        for (let j = 0; j <= 2; j++) { // Only consider bodySubSections 0-2
+                            let bodySubSection = section.bodySubSections[j];
+                            if (bodySubSection && bodySubSection.elements) {
+                                let elements = bodySubSection.elements;
+                                elements.forEach(element => {
+                                    if (element.items && element.items[0] && element.items[0].content) {
+                                        policies.push(element.items[0].content.text);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                }
+            }
 
-    // Clear existing content
-    hotelContainer.innerHTML = '';
+            const hotelContainer = document.getElementById('hotel-container');
 
-    const newContentContainer = document.createElement('div');
-    newContentContainer.setAttribute('id', 'hotel-data');
-    newContentContainer.classList.add('new-content-container');
+            // Clear existing content
+            hotelContainer.innerHTML = '';
 
-    
-    const nameElement = document.createElement('h1');
-    nameElement.textContent = name;
-    newContentContainer.appendChild(nameElement);
+            // Create new content container
+            const newContentContainer = document.createElement('div');
+            newContentContainer.setAttribute('id', 'hotel-data');
+            newContentContainer.classList.add('new-content-container');
 
-    const descriptionElement = document.createElement('p');
-    descriptionElement.textContent = description;
-    newContentContainer.appendChild(descriptionElement);
+            // Add images
+            const imagesContainer = document.createElement('div');
+            imagesContainer.setAttribute('class', 'image-container');
+            const imageElement = document.createElement('img');
+            imageElement.src = images[0];
+            imageElement.setAttribute('class', 'carousel-image');
+            imagesContainer.appendChild(imageElement);
+            const rightArrow = document.createElement('button');
+            rightArrow.innerHTML = '>';
+            rightArrow.setAttribute('class', 'carousel-arrow right');
+            imagesContainer.appendChild(rightArrow);
+            const leftArrow = document.createElement('button');
+            leftArrow.innerHTML = '<';
+            leftArrow.setAttribute('class', 'carousel-arrow left');
+            imagesContainer.appendChild(leftArrow);
+            let currentIndex = 0;
+            rightArrow.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % images.length;
+                imageElement.src = images[currentIndex];
+            });
+            leftArrow.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                imageElement.src = images[currentIndex];
+            });
+            newContentContainer.appendChild(imagesContainer);
 
-    const ratingElement = document.createElement('p');
-    ratingElement.textContent = `Rating: ${rating}`;
-    newContentContainer.appendChild(ratingElement);
+// Amenities
+const amenitiesElement = document.createElement('ul');
+amenitiesElement.setAttribute('class', 'amenities-list');
 
-    const locationElement = document.createElement('p');
-    locationElement.textContent = `Location: ${location}`;
-    newContentContainer.appendChild(locationElement);
+// Amenities Header
+const amenitiesHeaderElement = document.createElement('h2');
+amenitiesHeaderElement.style.textAlign = "center";
+amenitiesHeaderElement.textContent = "Amenities"; 
+amenitiesElement.appendChild(amenitiesHeaderElement);
 
-    const imagesContainer = document.createElement('div');
-    imagesContainer.setAttribute('class', 'image-container');
+amenities.forEach(amenity => {
+    const amenityItem = document.createElement('li');
+    amenityItem.textContent = amenity;
+    amenitiesElement.appendChild(amenityItem);
+});
 
-    const imageElement = document.createElement('img');
-    imageElement.src = images[0];
-    imageElement.setAttribute('class', 'carousel-image');
-    imagesContainer.appendChild(imageElement);
+newContentContainer.appendChild(amenitiesElement);
 
-    const rightArrow = document.createElement('button');
-    rightArrow.innerHTML = '>';
-    rightArrow.setAttribute('class', 'carousel-arrow right');
-    imagesContainer.appendChild(rightArrow);
+// Policies
+const policiesContainer = document.createElement('div');
+policiesContainer.setAttribute('class', 'policies-container');
 
-    const leftArrow = document.createElement('button');
-    leftArrow.innerHTML = '<';
-    leftArrow.setAttribute('class', 'carousel-arrow left');
-    imagesContainer.appendChild(leftArrow);
+// Policies Header
+const policiesHeaderElement = document.createElement('h2');
+policiesHeaderElement.style.textAlign = "center";
+policiesHeaderElement.textContent = "Policies"; 
+policiesContainer.appendChild(policiesHeaderElement);
 
-    let currentIndex = 0;
-    rightArrow.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % images.length;
-      imageElement.src = images[currentIndex];
+// Create a <ul> for the policies
+const policiesList = document.createElement('ul');
+policiesContainer.appendChild(policiesList);
+
+const parser = new DOMParser();
+
+policies.forEach(policy => {
+    const doc = parser.parseFromString(policy, 'text/html');
+    Array.from(doc.getElementsByTagName('script')).forEach(script => {
+        script.parentNode.removeChild(script);
     });
-
-    leftArrow.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + images.length) % images.length;
-      imageElement.src = images[currentIndex];
-    });
-
-    newContentContainer.appendChild(imagesContainer);
-
-    const amenitiesElement = document.createElement('ul');
-    amenities.forEach(amenity => {
-      const amenityItem = document.createElement('li');
-      amenityItem.textContent = amenity;
-      amenitiesElement.appendChild(amenityItem);
-    });
-    newContentContainer.appendChild(amenitiesElement);
     
-    hotelContainer.appendChild(newContentContainer);
+    // Split the policy text into separate lines
+    const policyLines = doc.body.textContent.split('\n');
+    
+    policyLines.forEach(line => {
+        // Create a new <li> for each line
+        const policyItem = document.createElement('li');
+        policyItem.textContent = line;
+        policyItem.style.textAlign = 'left';  // Align text to the left
+        policiesList.appendChild(policyItem);
+        policyItem.classList.add('left-align');
+    });
+});
 
-  } catch (error) {
-    console.error('Error:', error);
-    return null;
-  }
-}
 
-// Attach the function to window so it can be accessed globally
-window.fetchHotelDetails = fetchHotelDetails;
+
+            newContentContainer.appendChild(policiesContainer);
+
+            // Add name, rating, and location
+            const nameElement = document.createElement('h1');
+            nameElement.textContent = name;
+            newContentContainer.appendChild(nameElement);
+
+            const ratingElement = document.createElement('p');
+            ratingElement.textContent = `Rating: ${rating}`;
+            newContentContainer.appendChild(ratingElement);
+
+            const locationElement = document.createElement('p');
+            locationElement.textContent = `Location: ${location}`;
+            newContentContainer.appendChild(locationElement);
+
+            hotelContainer.appendChild(newContentContainer);
+        } catch (error) {
+            console.error('Error:', error);
+            return null;
+        }
+    }
+
+    window.fetchHotelDetails = fetchHotelDetails;
     </script>
-
 </body>
 </html>
