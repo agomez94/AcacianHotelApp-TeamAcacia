@@ -1,4 +1,12 @@
 pipeline {
+  environment {
+  registry = 'eglad001/team-acacia'
+  registryCredentials = 'teamacacia'
+  cluster_name = 'team-acacia-eks'
+  // cluster_name = 'acacian-hotelapp'
+  namespace = 'team-acacia'
+  }
+
   agent {
     node {
       label 'teamacacia'
@@ -53,12 +61,5 @@ pipeline {
 
       }
     }
-
-  }
-  environment {
-    registry = 'eglad001/team-acacia'
-    registryCredentials = 'teamacacia'
-    cluster_name = 'acacian-hotelapp'
-    namespace = 'team-acacia'
   }
 }
