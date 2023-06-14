@@ -54,7 +54,8 @@ pipeline {
               echo "Error / namespace already created"
             }
           }
-
+          
+          sh "kubectl start"
           sh "kubectl apply -f ./deployment.yaml -n ${namespace}"
           sh "kubectl -n ${namespace} rollout restart deployment team-acacia"
         }
