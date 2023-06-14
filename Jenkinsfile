@@ -1,4 +1,12 @@
 pipeline {
+  environment {
+  registry = 'eglad001/team-acacia'
+  registryCredentials = 'teamacacia'
+  cluster_name = 'team-acacia-eks'
+  // cluster_name = 'acacian-hotelapp'
+  namespace = 'team-acacia'
+  }
+
   agent {
     node {
       label 'teamacacia'
@@ -36,7 +44,7 @@ pipeline {
 
     stage('kubernetes') {
       steps {
-        withCredentials(bindings: [aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS', secretKeyVariable: "AWS_SECRET_ACCESS_KEY")]) {
+        withCredentials(bindings: [aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS2', secretKeyVariable: "AWS_SECRET_ACCESS_KEY")]) {
           sh "aws eks --region us-east-1 update-kubeconfig --name ${cluster_name}"
           script {
             try {
@@ -53,12 +61,5 @@ pipeline {
 
       }
     }
-
-  }
-  environment {
-    registry = 'eglad001/team-acacia'
-    registryCredentials = 'teamacacia'
-    cluster_name = 'acacian-hotelapp'
-    namespace = 'team-acacia'
   }
 }
