@@ -1,0 +1,1 @@
+{"filename": "builds\\d1d9a2a4f9e2437b8479db3088b26898f10f01f26d1f121ce30153da04e9f71a.zip", "runtime": "python3.8", "artifacts_dir": "builds", "build_plan": [["zip", "../src/python-function/lambda-retreive.py", null]]}
