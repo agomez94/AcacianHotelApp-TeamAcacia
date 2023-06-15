@@ -2,9 +2,9 @@ pipeline {
   environment {
   registry = 'eglad001/team-acacia'
   registryCredentials = 'teamacacia'
-  cluster_name = 'team-acacia-eks'
-  // cluster_name = 'acacian-hotelapp'
-  namespace = 'team-acacia'
+  // cluster_name = 'team-acacia-eks'
+
+  // namespace = 'team-acacia'
   }
 
   agent {
@@ -42,24 +42,24 @@ pipeline {
       }
     }
 
-    stage('kubernetes') {
-      steps {
-        withCredentials(bindings: [aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS2', secretKeyVariable: "AWS_SECRET_ACCESS_KEY")]) {
-          sh "aws eks --region us-east-1 update-kubeconfig --name ${cluster_name}"
-          script {
-            try {
-              sh "kubectl create namespace ${namespace}"
-            }
-            catch (Exception e) {
-              echo "Error / namespace already created"
-            }
-          }
+    // stage('kubernetes') {
+    //   steps {
+    //     withCredentials(bindings: [aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS2', secretKeyVariable: "AWS_SECRET_ACCESS_KEY")]) {
+    //       sh "aws eks --region us-east-1 update-kubeconfig --name ${cluster_name}"
+    //       script {
+    //         try {
+    //           sh "kubectl create namespace ${namespace}"
+    //         }
+    //         catch (Exception e) {
+    //           echo "Error / namespace already created"
+    //         }
+    //       }
 
-          sh "kubectl apply -f ./deployment.yaml -n ${namespace}"
-          sh "kubectl -n ${namespace} rollout restart deployment team-acacia"
-        }
+    //       sh "kubectl apply -f ./deployment.yaml -n ${namespace}"
+    //       sh "kubectl -n ${namespace} rollout restart deployment team-acacia"
+    //     }
 
       }
     }
-  }
-}
+//   }
+// }
