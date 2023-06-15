@@ -1,7 +1,7 @@
 # Use the official httpd image as the base image
 FROM httpd:latest
 
-WORKDIR /var/www/html
+WORKDIR /usr/local/apache2/htdocs/
 
 # Copy the index.html file into the default Apache document root directory
 COPY ServerlessRealEstateApp-TeamAcacia/webapp/new-website/index.html .
@@ -18,6 +18,6 @@ COPY ServerlessRealEstateApp-TeamAcacia/webapp/new-website/main.js .
 
 
 # Expose port 80 to allow incoming HTTP traffic
-# EXPOSE 5000
+EXPOSE 80
 
 RUN rm -rf /etc/apache2/sites-enabled/000-default.conf
