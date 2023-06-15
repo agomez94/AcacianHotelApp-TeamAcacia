@@ -1,5 +1,5 @@
 # Use the official httpd image as the base image
-FROM httpd:latest
+FROM httpd:2.4
 
 WORKDIR /usr/local/apache2/htdocs/
 
@@ -18,6 +18,10 @@ COPY ServerlessRealEstateApp-TeamAcacia/webapp/new-website/main.js .
 
 
 # Expose port 80 to allow incoming HTTP traffic
-EXPOSE 80
+RUN  mkdir -p /run/apache2/ && \
+     chown www-data:www-data /run/apache2/ && \
+     chmod 777 /run/apache2/
 
-RUN rm -rf /etc/apache2/sites-enabled/000-default.conf
+EXPOSE 80 443
+
+# RUN rm -rf /etc/apache2/sites-enabled/000-default.conf
