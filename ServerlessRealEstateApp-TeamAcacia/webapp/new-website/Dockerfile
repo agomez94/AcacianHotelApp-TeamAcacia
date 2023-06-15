@@ -1,7 +1,7 @@
 # Use the official httpd image as the base image
 FROM httpd:latest
 
-WORKDIR /usr/local/apache2/htdocs
+WORKDIR /var/www/html
 
 # Copy the index.html file into the default Apache document root directory
 COPY ServerlessRealEstateApp-TeamAcacia/webapp/new-website/index.html .
