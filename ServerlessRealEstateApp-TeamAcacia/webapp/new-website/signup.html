@@ -86,37 +86,40 @@
 
 <script>
   function submitForm(event) {
-    event.preventDefault(); // Prevent the form from submitting normally
-  
-    var username = document.getElementById("uname").value;
-    var password = document.getElementById("psw").value;
-    var confirmPsw = document.getElementById("confirm-psw").value;
-  
-    // Create the request body as JSON
-    var requestBody = JSON.stringify({
-      "username": username,
-      "password": password,
-      "confirmPsw": confirmPsw
-    });
-  
-    // Send the request to the API Gateway endpoint
-    fetch("https://jar7145dnc.execute-api.us-east-1.amazonaws.com/dev/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: requestBody
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data); // Process the response as needed
-      })
-      .catch(error => {
-        console.error("Error:", error);
-      });
-  }
-  </script>
-  
+  event.preventDefault(); // Prevent the form from submitting normally
 
+  var username = document.getElementById("uname").value;
+  var password = document.getElementById("psw").value;
+  var confirmPsw = document.getElementById("confirm-psw").value;
+
+  // Create the request body as JSON
+  var requestBody = JSON.stringify({
+    "UserID": username,
+    "Password": password,
+    "confirmPsw": confirmPsw
+  });
+
+  // Send the request to the API Gateway endpoint
+  fetch("https://jar7145dnc.execute-api.us-east-1.amazonaws.com/dev/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: requestBody
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data); // Process the response as needed
+      if (data.statusCode === 200) {
+        // Successful signup, redirect to login page
+        window.location.href = "login.html"; // Replace with your login page URL
+      }
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
+}
+
+  </script>
 </body>
 </html>
