@@ -18,6 +18,6 @@ COPY ServerlessRealEstateApp-TeamAcacia/webapp/new-website/main.js .
 
 
 # Expose port 80 to allow incoming HTTP traffic
-EXPOSE 80
+# EXPOSE 5000
 
 RUN rm -rf /etc/apache2/sites-enabled/000-default.conf
