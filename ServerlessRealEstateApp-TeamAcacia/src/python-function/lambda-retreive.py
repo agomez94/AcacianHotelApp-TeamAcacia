@@ -3,23 +3,23 @@ import boto3
 import mysql.connector
 
 def lambda_handler(event, context):
-    # Extract username and password from the API request body
+    # Extract UserID and Password from the API request body
     request_body = json.loads(event['body'])
-    username = request_body['username']
-    password = request_body['password']
+    UserID = request_body['UserID']
+    Password = request_body['Password']
 
     # Create a connection to the RDS MySQL database
-    db_instance_identifier = 'tf-20230610192157489100000003'  # Replace with your RDS instance identifier
+    db_instance_identifier = 'tf-20230614154028687200000003'  # Replace with your RDS instance identifier
     db_endpoint = boto3.client('rds').describe_db_instances(DBInstanceIdentifier=db_instance_identifier)['DBInstances'][0]['Endpoint']['Address']
 
-    # Connect to the database and retrieve the saved username and password
+    # Connect to the database and retrieve the saved UserID and Password
     try:
-        conn = mysql.connector.connect(host=db_endpoint, user='taadmin1', password='12qwaszx#$ERDFCV', database='team-acacia-test-db-cluster')
+        conn = mysql.connector.connect(host=db_endpoint, user='taadmin1', password='12qwaszx#$ERDFCV', database='Team-Acacia-DB')
         cursor = conn.cursor()
 
-        # Execute the SELECT query to retrieve the matching username and password
-        select_query = "SELECT username, password FROM users WHERE username = %s AND password = %s"
-        cursor.execute(select_query, (username, password))
+        # Execute the SELECT query to retrieve the matching UserID and Password
+        select_query = "SELECT UserID, Password FROM UserInfo WHERE UserID = %s AND Password = %s"
+        cursor.execute(select_query, (UserID, Password))
         result = cursor.fetchall()
 
         # Close the database connection
@@ -49,7 +49,7 @@ def lambda_handler(event, context):
         # Return an error response
         response = {
             'statusCode': 500,
-            'body': json.dumps(f"Error retrieving username and password: {str(error)}"),
+            'body': json.dumps(f"Error retrieving UserID and Password: {str(error)}"),
             'headers': {
                 'Access-Control-Allow-Origin': '*'
             }
