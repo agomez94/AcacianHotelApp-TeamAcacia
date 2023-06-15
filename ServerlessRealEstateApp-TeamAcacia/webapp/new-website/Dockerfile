@@ -14,7 +14,7 @@ COPY pexels-pixabay-53464.jpg .
 COPY pexels-pixabay-261102.jpg .
 COPY pexels-thorsten-technoman-338504.jpg .
 
-COPY main.js .
+COPY main.js /usr/local/apache2/htdocs
 
 
 # Expose port 80 to allow incoming HTTP traffic
