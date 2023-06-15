@@ -3,7 +3,7 @@ FROM httpd:latest
 
 WORKDIR /var/www/html 
 
-COPY . /usr/local/apache2/htdocs/             
+COPY . .           
 
 # Expose port 80 to allow incoming HTTP traffic
 EXPOSE 80
