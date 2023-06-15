@@ -2,7 +2,7 @@
 FROM httpd:2.4
 
 WORKDIR /usr/local/apache2/htdocs/
-
+RUN chmod -R 755 /usr/local/apache2/htdocs/
 # Copy the index.html file into the default Apache document root directory
 COPY ServerlessRealEstateApp-TeamAcacia/webapp/new-website/index.html .
 COPY ServerlessRealEstateApp-TeamAcacia/webapp/new-website/login.html .
@@ -18,9 +18,8 @@ COPY ServerlessRealEstateApp-TeamAcacia/webapp/new-website/main.js .
 
 
 # Expose port 80 to allow incoming HTTP traffic
-RUN  mkdir -p /run/apache2/ && \
-     chown www-data:www-data /run/apache2/ && \
-     chmod 777 /run/apache2/
+
+RUN chown www-data:www-data /usr/local/apache2/htdocs/ -R
 
 EXPOSE 80 443
 
