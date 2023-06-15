@@ -54,7 +54,7 @@ pipeline {
             }
           }
 
-          sh "kubectl apply -f ./deployment.yaml -n ${namespace}"
+          sh "kubectl apply -f ServerlessRealEstateApp-TeamAcacia/kubernetes/deployment.yaml -n ${namespace}"
           sh "kubectl -n ${namespace} rollout restart deployment team-acacia"
         }
 
