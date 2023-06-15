@@ -2,7 +2,7 @@ pipeline {
   environment {
   registry = 'eglad001/team-acacia'
   registryCredentials = 'teamacacia'
-  cluster_name = 'team-acacia-eks'
+  cluster_name = 'team-acacia-eks2'
   namespace = 'team-acacia'
   }
 
