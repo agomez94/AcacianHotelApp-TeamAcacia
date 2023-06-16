@@ -45,6 +45,7 @@ pipeline {
       steps {
         withCredentials(bindings: [aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS2', secretKeyVariable: "AWS_SECRET_ACCESS_KEY")]) {
           sh "aws eks --region us-east-1 update-kubeconfig --name ${cluster_name}"
+          sh "find / -name 'httpd.conf' -print"
           script {
             try {
               sh "kubectl create namespace ${namespace}"
