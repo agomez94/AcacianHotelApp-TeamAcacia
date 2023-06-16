@@ -4,3 +4,11 @@ Jenkins enabled the team to automate our build, test, and deployment workflows,
 ensuring that our applications were consistently and reliably delivered.
 Our Jenkins pipeline takes updates from our Git repository and 
 builds or updates the Docker Container hosting our website and it's dependencies.
+-looking at github for updates
+-grabs the updates 
+-builds the Dockerhub container based on repository guidelines
+-Kubernetes would be used to push the updated container to Amazon EKS.
+
+In the time it took me to explain this pipeline, you can see Jenkins completed 6 stages in 
+xx seconds. It is a powerfull Integration and deployment tool that we used to significantly
+increase productivity and complete tasks on time. 
