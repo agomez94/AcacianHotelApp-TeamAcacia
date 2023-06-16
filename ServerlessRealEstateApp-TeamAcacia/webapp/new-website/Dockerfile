@@ -3,7 +3,7 @@ FROM httpd:2.4
 RUN rm -rf /etc/apache2/sites-enabled/000-default.conf
 
 WORKDIR /usr/local/apache2/htdocs/
-ENTRYPOINT ["chmod -R 755 /usr/local/apache2/htdocs/"]
+# ENTRYPOINT ["chmod -R 755 /usr/local/apache2/htdocs/"]
 # Copy the index.html file into the default Apache document root directory
 COPY ServerlessRealEstateApp-TeamAcacia/webapp/new-website/index.html .
 COPY ServerlessRealEstateApp-TeamAcacia/webapp/new-website/login.html .
