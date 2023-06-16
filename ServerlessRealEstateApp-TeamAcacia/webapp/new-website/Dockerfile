@@ -22,6 +22,6 @@ COPY ServerlessRealEstateApp-TeamAcacia/webapp/new-website/main.js .
 
 RUN chown www-data:www-data /usr/local/apache2/htdocs/ -R
 
-EXPOSE 80 443
-
+EXPOSE 80/tcp
+EXPOSE 80/udp
 # RUN rm -rf /etc/apache2/sites-enabled/000-default.conf
