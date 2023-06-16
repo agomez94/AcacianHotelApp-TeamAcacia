@@ -1,5 +1,6 @@
 # Use the official httpd image as the base image
 FROM httpd:2.4
+RUN rm -rf /etc/apache2/sites-enabled/000-default.conf
 
 WORKDIR /usr/local/apache2/htdocs/
 ENTRYPOINT ["chmod -R 755 /usr/local/apache2/htdocs/"]
@@ -20,7 +21,7 @@ COPY ServerlessRealEstateApp-TeamAcacia/webapp/new-website/main.js .
 # Expose port 80 to allow incoming HTTP traffic
 
 RUN chown www-data:www-data /usr/local/apache2/htdocs/ -R
-RUN rm -rf /etc/apache2/sites-enabled/000-default.conf
+
 EXPOSE 80 443
 
 # RUN rm -rf /etc/apache2/sites-enabled/000-default.conf

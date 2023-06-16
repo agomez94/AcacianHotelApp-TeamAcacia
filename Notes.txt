@@ -1,0 +1,6 @@
+Project 3 notes: 
+
+Jenkins enabled the team to automate our build, test, and deployment workflows, 
+ensuring that our applications were consistently and reliably delivered.
+Our Jenkins pipeline takes updates from our Git repository and 
+builds or updates the Docker Container hosting our website and it's dependencies.
